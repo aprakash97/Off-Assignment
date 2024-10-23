@@ -1,0 +1,16 @@
+spring:
+  config:
+    activate:
+      on-profile: "prod"
+
+build:
+  version: "2.0"
+
+accounts:
+  message: "Welcome to Bank accounts related Production APIs "
+  contactDetails:
+    name: "Prod Doe - Owner"
+    email: "prakash.anandakumar@acentura.com"
+  onCallSupport:
+    - (555) 555-1234
+    - (555) 523-1345
