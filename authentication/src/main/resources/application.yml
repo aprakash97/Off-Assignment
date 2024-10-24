@@ -2,7 +2,7 @@ server:
   port: 8081
 spring:
   datasource:
-    url: jdbc:h2:mem:testdb
+    url: jdbc:h2:mem:auth
     driverClassName: org.h2.Driver
     username: sa
     password: ''
@@ -14,3 +14,7 @@ spring:
     hibernate:
       ddl-auto: update
     show-sql: true
+jwt:
+  secret: mysecureverylongsecretkeywithenoughlength123456
+  token:
+    validity: 360000
