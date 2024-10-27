@@ -12,3 +12,9 @@ CREATE TABLE IF NOT EXISTS `loans` (
   `updated_by` varchar(20) DEFAULT NULL,
   PRIMARY KEY (`loan_id`)
 );
+
+CREATE TABLE IF NOT EXISTS `promotions` (
+  `promotion_id` int NOT NULL AUTO_INCREMENT,
+  `promotion_title` varchar(100) NOT NULL,
+  PRIMARY KEY (`promotion_id`)
+);
