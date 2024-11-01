@@ -8,6 +8,7 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="eurekaserver" />
+        <module name="gatewayserver" />
         <module name="accounts" />
         <module name="Authentication" />
         <module name="loans" />
@@ -15,6 +16,7 @@
     </annotationProcessing>
     <bytecodeTargetLevel>
       <module name="accounts (1)" target="21" />
+      <module name="demo" target="21" />
       <module name="maven-archiver" target="1.5" />
     </bytecodeTargetLevel>
   </component>
@@ -23,7 +25,9 @@
       <module name="Authentication" options="-parameters" />
       <module name="accounts" options="-parameters" />
       <module name="accounts (1)" options="-parameters" />
+      <module name="demo" options="-parameters" />
       <module name="eurekaserver" options="-parameters" />
+      <module name="gatewayserver" options="-parameters" />
       <module name="loans" options="-parameters" />
     </option>
   </component>
