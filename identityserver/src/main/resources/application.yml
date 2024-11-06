@@ -1,8 +1,9 @@
 server:
-  port: 8080
+  port: 8081
+
 spring:
   application:
-    name: "accounts"
+    name: "identityserver"
   datasource:
     url: jdbc:postgresql://localhost:5432/spring_boot
     driverClassName: org.postgresql.Driver
@@ -41,12 +42,6 @@ eureka:
 
 info:
   app:
-    name: "accounts"
-    description: "Bank Accounts Application"
+    name: "Auth App"
+    description: "Authentication Application"
     version: "1.0.0"
-
-logging:
-  level:
-    com:
-      eazybytes:
-        accounts: DEBUG

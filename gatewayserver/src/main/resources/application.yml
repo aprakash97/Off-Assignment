@@ -7,6 +7,25 @@ spring:
     import: "optional:configserver:http://localhost:8071"
   cloud:
     gateway:
+      routes:
+        - id: accounts
+          uri: lb://ACCOUNTS
+          predicates:
+            - Path=/accounts/**
+          filters:
+            - RoleFilter
+
+        - id: loans
+          uri: lb://LOANS
+          predicates:
+            - Path=/loans/**
+#          filters:
+#            - RoleFilter
+
+        - id: identityserver
+          uri: lb://IDENTITYSERVER
+          predicates:
+            - Path=/auth/**
       discovery:
         locator:
           enabled: true

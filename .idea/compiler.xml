@@ -10,13 +10,15 @@
         <module name="eurekaserver" />
         <module name="gatewayserver" />
         <module name="accounts" />
-        <module name="Authentication" />
         <module name="loans" />
+        <module name="identityserver" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
       <module name="accounts (1)" target="21" />
+      <module name="Authentication" target="21" />
       <module name="demo" target="21" />
+      <module name="identityservice" target="21" />
       <module name="maven-archiver" target="1.5" />
     </bytecodeTargetLevel>
   </component>
@@ -28,6 +30,8 @@
       <module name="demo" options="-parameters" />
       <module name="eurekaserver" options="-parameters" />
       <module name="gatewayserver" options="-parameters" />
+      <module name="identityserver" options="-parameters" />
+      <module name="identityservice" options="-parameters" />
       <module name="loans" options="-parameters" />
     </option>
   </component>

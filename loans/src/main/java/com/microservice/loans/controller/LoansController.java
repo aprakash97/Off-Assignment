@@ -23,7 +23,7 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @AllArgsConstructor
 @Validated
-@RequestMapping(path = "/api", produces = {MediaType.APPLICATION_JSON_VALUE})
+@RequestMapping(path = "/loans", produces = {MediaType.APPLICATION_JSON_VALUE})
 @Tag(
         name = "Loans",
         description = "CRUD REST APIs for Loans Microservice"

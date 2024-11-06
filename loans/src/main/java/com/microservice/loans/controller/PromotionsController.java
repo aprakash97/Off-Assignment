@@ -30,7 +30,7 @@ import java.util.List;
 @RestController
 @AllArgsConstructor
 @Validated
-@RequestMapping(path = "/api", produces = {MediaType.APPLICATION_JSON_VALUE})
+@RequestMapping(path = "/promotions", produces = {MediaType.APPLICATION_JSON_VALUE})
 @Tag(
         name = "Promotion",
         description = "CRUD REST APIs for Promotions Microservice"
