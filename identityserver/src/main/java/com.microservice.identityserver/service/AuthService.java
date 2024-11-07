@@ -21,6 +21,9 @@ public class AuthService {
     private JwtService jwtService;
 
     public String saveUser(UserCredential credential){
+        if(credential.getName().equals("Admin")){
+            credential.setRole("ADMIN");
+        }
         credential.setPassword(passwordEncoder.encode(credential.getPassword()));
         repository.save(credential);
         return "User Added to the System";

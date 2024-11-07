@@ -14,13 +14,13 @@ import lombok.Data;
 )
 public class LoansDto {
 
-    @NotEmpty(message = "Mobile Number cannot be empty or null")
-    @Pattern(regexp = "(^$|[0-9]{10})", message = "Mobile number must be 10 digits")
+    @NotEmpty(message = "NIC Number cannot be empty or null")
+    @Pattern(regexp = "(^$|[0-9]{12})", message = "NIC number must be 12 digits")
     @Schema(
-            description = "Mobile number of customer",
-            example = "1414141414"
+            description = "NIC number of customer",
+            example = "198201409894"
     )
-    private String mobileNumber;
+    private String nicNumber;
 
     @NotEmpty(message = "Loan Number cannot be empty or null")
     @Pattern(regexp = "(^$|[0-9]{12})", message = "Loan number must be 12 digits")

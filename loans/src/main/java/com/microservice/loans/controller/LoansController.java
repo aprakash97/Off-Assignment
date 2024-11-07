@@ -28,7 +28,6 @@ import org.springframework.web.bind.annotation.*;
         name = "Loans",
         description = "CRUD REST APIs for Loans Microservice"
 )
-
 public class LoansController {
 
     private ILoansService iLoansService;
@@ -53,9 +52,9 @@ public class LoansController {
     )
     @PostMapping("/create")
     public ResponseEntity<ResponseDto> createLoan(@RequestParam
-                                                  @Pattern(regexp="(^$|[0-9]{10})",message = "Mobile number must be 10 digits")
-                                                  String mobileNumber) {
-        iLoansService.createLoan(mobileNumber);
+                                                  @Pattern(regexp="(^$|[0-9]{12})",message = "NIC number must be 12 digits")
+                                                  String nicNumber) {
+        iLoansService.createLoan(nicNumber);
         return ResponseEntity
                 .status(HttpStatus.CREATED)
                 .body(new ResponseDto(LoansConstants.STATUS_201, LoansConstants.MESSAGE_201));
@@ -81,9 +80,9 @@ public class LoansController {
     )
     @GetMapping("/fetch")
     public ResponseEntity<LoansDto> fetchLoanDetails(@RequestParam
-                                                     @Pattern(regexp="(^$|[0-9]{10})",message = "Mobile number must be 10 digits")
-                                                     String mobileNumber) {
-        LoansDto loansDto = iLoansService.fetchLoan(mobileNumber);
+                                                     @Pattern(regexp="(^$|[0-9]{12})",message = "NIC number must be 12 digits")
+                                                     String nicNumber) {
+        LoansDto loansDto = iLoansService.fetchLoan(nicNumber);
         return ResponseEntity.status(HttpStatus.OK).body(loansDto);
     }
 
@@ -146,9 +145,9 @@ public class LoansController {
     })
     @DeleteMapping("/delete")
     public ResponseEntity<ResponseDto> deleteLoanDetails(@RequestParam
-                                                         @Pattern(regexp="(^$|[0-9]{10})",message = "Mobile number must be 10 digits")
-                                                         String mobileNumber) {
-        boolean isDeleted = iLoansService.deleteLoan(mobileNumber);
+                                                         @Pattern(regexp="(^$|[0-9]{12})",message = "NIC number must be 10 digits")
+                                                         String nicNumber) {
+        boolean isDeleted = iLoansService.deleteLoan(nicNumber);
         if(isDeleted) {
             return ResponseEntity
                     .status(HttpStatus.OK)

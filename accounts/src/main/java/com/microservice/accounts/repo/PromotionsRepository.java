@@ -1,7 +1,6 @@
-package com.microservice.loans.repo;
+package com.microservice.accounts.repo;
 
-import com.microservice.loans.entity.Loans;
-import com.microservice.loans.entity.Promotions;
+import com.microservice.accounts.entity.Promotions;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Optional;

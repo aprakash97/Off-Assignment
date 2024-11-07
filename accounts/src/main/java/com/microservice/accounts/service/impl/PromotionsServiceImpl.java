@@ -1,9 +1,9 @@
-package com.microservice.loans.service.impl;
+package com.microservice.accounts.service.impl;
 
-import com.microservice.loans.entity.Promotions;
-import com.microservice.loans.exception.LoanAlreadyExistsException;
-import com.microservice.loans.repo.PromotionsRepository;
-import com.microservice.loans.service.IPromotionsService;
+import com.microservice.accounts.entity.Promotions;
+import com.microservice.accounts.exception.CustomerAlreadyExistsException;
+import com.microservice.accounts.repo.PromotionsRepository;
+import com.microservice.accounts.service.IPromotionsService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -18,10 +18,9 @@ public class PromotionsServiceImpl implements IPromotionsService{
 
     @Override
     public void createPromotion(String promotionalTitle) {
-        System.out.println("Testing" + promotionalTitle);
         Optional<Promotions> optionalPromotions = promotionsRepository.findByPromotionTitle(promotionalTitle);
         if(optionalPromotions.isPresent()){
-            throw new LoanAlreadyExistsException("Promotion already registered with the same title"+promotionalTitle);
+            throw new CustomerAlreadyExistsException("Promotion already registered with the same title"+promotionalTitle);
         }
         promotionsRepository.save(createNewPromotion(promotionalTitle));
     }

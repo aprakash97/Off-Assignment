@@ -1,4 +1,4 @@
-package com.microservice.loans.entity;
+package com.microservice.accounts.entity;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;

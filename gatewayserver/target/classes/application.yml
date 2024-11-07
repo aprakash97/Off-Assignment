@@ -19,8 +19,8 @@ spring:
           uri: lb://LOANS
           predicates:
             - Path=/loans/**
-#          filters:
-#            - RoleFilter
+          filters:
+            - AuthenticationFilter
 
         - id: identityserver
           uri: lb://IDENTITYSERVER

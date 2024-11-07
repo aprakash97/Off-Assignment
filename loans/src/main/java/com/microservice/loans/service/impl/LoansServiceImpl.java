@@ -21,26 +21,26 @@ public class LoansServiceImpl implements ILoansService {
     private LoansRepository loansRepository;
 
     /**
-     * @param mobileNumber - Mobile Number of the Customer
+     * @param nicNumber - NIC Number of the Customer
      */
     @Override
-    public void createLoan(String mobileNumber) {
-        Optional<Loans> optionalLoans= loansRepository.findByMobileNumber(mobileNumber);
+    public void createLoan(String nicNumber) {
+        Optional<Loans> optionalLoans= loansRepository.findByNicNumber(nicNumber);
         if(optionalLoans.isPresent()){
-            throw new LoanAlreadyExistsException("Loan already registered with given mobileNumber "+mobileNumber);
+            throw new LoanAlreadyExistsException("Loan already registered with given mobileNumber "+nicNumber);
         }
-        loansRepository.save(createNewLoan(mobileNumber));
+        loansRepository.save(createNewLoan(nicNumber));
     }
 
     /**
-     * @param mobileNumber - Mobile Number of the Customer
+     * @param nicNumber - NIC Number of the Customer
      * @return the new loan details
      */
-    private Loans createNewLoan(String mobileNumber) {
+    private Loans createNewLoan(String nicNumber) {
         Loans newLoan = new Loans();
         long randomLoanNumber = 100000000000L + new Random().nextInt(900000000);
         newLoan.setLoanNumber(Long.toString(randomLoanNumber));
-        newLoan.setMobileNumber(mobileNumber);
+        newLoan.setNicNumber(nicNumber);
         newLoan.setLoanType(LoansConstants.HOME_LOAN);
         newLoan.setTotalLoan(LoansConstants.NEW_LOAN_LIMIT);
         newLoan.setAmountPaid(0);
@@ -50,13 +50,13 @@ public class LoansServiceImpl implements ILoansService {
 
     /**
      *
-     * @param mobileNumber - Input mobile Number
+     * @param nicNumber - Input mobile Number
      * @return Loan Details based on a given mobileNumber
      */
     @Override
-    public LoansDto fetchLoan(String mobileNumber) {
-        Loans loans = loansRepository.findByMobileNumber(mobileNumber).orElseThrow(
-                () -> new ResourceNotFoundException("Loan", "mobileNumber", mobileNumber)
+    public LoansDto fetchLoan(String nicNumber) {
+        Loans loans = loansRepository.findByNicNumber(nicNumber).orElseThrow(
+                () -> new ResourceNotFoundException("Loan", "mobileNumber", nicNumber)
         );
         return LoansMapper.mapToLoansDto(loans, new LoansDto());
     }
@@ -76,13 +76,13 @@ public class LoansServiceImpl implements ILoansService {
     }
 
     /**
-     * @param mobileNumber - Input MobileNumber
+     * @param nicNumber - Input MobileNumber
      * @return boolean indicating if the delete of loan details is successful or not
      */
     @Override
-    public boolean deleteLoan(String mobileNumber) {
-        Loans loans = loansRepository.findByMobileNumber(mobileNumber).orElseThrow(
-                () -> new ResourceNotFoundException("Loan", "mobileNumber", mobileNumber)
+    public boolean deleteLoan(String nicNumber) {
+        Loans loans = loansRepository.findByNicNumber(nicNumber).orElseThrow(
+                () -> new ResourceNotFoundException("Loan", "mobileNumber", nicNumber)
         );
         loansRepository.deleteById(loans.getLoanId());
         return true;

@@ -1,10 +1,15 @@
 package com.microservice.accounts.controller;
 
+import com.itextpdf.text.Document;
+import com.itextpdf.text.DocumentException;
+import com.itextpdf.text.Paragraph;
+import com.itextpdf.text.pdf.PdfWriter;
 import com.microservice.accounts.constants.AccountsConstants;
 import com.microservice.accounts.dto.CustomerDto;
 import com.microservice.accounts.dto.ErrorResponseDto;
 import com.microservice.accounts.dto.ResponseDto;
 import com.microservice.accounts.service.IAccountsService;
+import com.microservice.accounts.service.IPromotionsService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -12,6 +17,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import io.swagger.v3.oas.annotations.tags.Tags;
+import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Pattern;
 import lombok.AllArgsConstructor;
@@ -20,6 +26,10 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.util.List;
 
 
 @Tag(
@@ -33,6 +43,7 @@ import org.springframework.web.bind.annotation.*;
 public class AccountsController {
 
     private IAccountsService iAccountsService;
+    private IPromotionsService iPromotionsService;
 
     @PostMapping("/create")
     @Operation(
@@ -136,5 +147,64 @@ public class AccountsController {
                     .status(HttpStatus.EXPECTATION_FAILED)
                     .body(new ResponseDto(AccountsConstants.STATUS_417, AccountsConstants.MESSAGE_417_DELETE));
         }
+    }
+
+    @Operation(
+            summary = "Create Promotion REST API",
+            description = "REST API to create new promotion inside Bank"
+    )
+    @ApiResponses({
+            @ApiResponse(
+                    responseCode = "201",
+                    description = "HTTP Status CREATED"
+            ),
+            @ApiResponse(
+                    responseCode = "500",
+                    description = "HTTP Status Internal Server Error",
+                    content = @Content(
+                            schema = @Schema(implementation = ErrorResponseDto.class)
+                    )
+            )
+    }
+    )
+
+    @PostMapping("/createPromotion")
+    public ResponseEntity<ResponseDto> createLoan(@RequestParam
+                                                  @Pattern(regexp = "^.{10,100}$",message = "Promotional title should be exceeded")
+                                                  String promotionalTitle) {
+        System.out.println("Testing in controller" + promotionalTitle);
+        iPromotionsService.createPromotion(promotionalTitle);
+        return ResponseEntity
+                .status(HttpStatus.CREATED)
+                .body(new ResponseDto(AccountsConstants.STATUS_201, AccountsConstants.MESSAGE_201_PROMOTION));
+    }
+
+    @Operation(
+            summary = "Get Promotion REST API",
+            description = "REST API to get all promotions list as PDF"
+    )
+    @GetMapping(value = "/getPromotions", produces = MediaType.APPLICATION_PDF_VALUE)
+    public void getAllPromotionsAsPdf(HttpServletResponse response) throws DocumentException, IOException {
+        List<String> promotions = iPromotionsService.getAllPromotions();
+
+        response.setContentType("application/pdf");
+        response.setHeader("Content-Disposition", "attachment; filename=promotions.pdf");
+
+        Document document = new Document();
+        ByteArrayOutputStream out = new ByteArrayOutputStream();
+        PdfWriter.getInstance(document, out);
+
+        document.open();
+        document.add(new Paragraph("Promotions List"));
+        document.add(new Paragraph(" "));
+
+        for (String promotion : promotions) {
+            document.add(new Paragraph(promotion));
+        }
+
+        document.close();
+
+        response.getOutputStream().write(out.toByteArray());
+        response.getOutputStream().flush();
     }
 }
