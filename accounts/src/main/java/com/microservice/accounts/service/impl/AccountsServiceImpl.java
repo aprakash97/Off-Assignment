@@ -29,14 +29,13 @@ public class AccountsServiceImpl implements IAccountsService {
     @Override
     public void createAccount(CustomerDto customerDto) {
         Customer customer = CustomerMapper.mapToCustomer(customerDto, new Customer());
-        Optional<Customer> optionalCustomer = customerRepository.findByMobileNumber(customerDto.getMobileNumber());
+        Optional<Customer> optionalCustomer = customerRepository.findByNicNumber(customerDto.getNicNumber());
         if(optionalCustomer.isPresent()){
-            throw new CustomerAlreadyExistsException("Customer already registered with same mobile" + customerDto.getMobileNumber());
+            throw new CustomerAlreadyExistsException("Customer already registered with same NIC" + customerDto.getNicNumber());
         }
 
 
         Customer savedCustomer = customerRepository.save(customer);
-        System.out.println("CHECKING"+savedCustomer +createNewAccount(savedCustomer));
         accountsRepository.save(createNewAccount(customer));
 
     }
@@ -57,9 +56,9 @@ public class AccountsServiceImpl implements IAccountsService {
 
 
     @Override
-    public CustomerDto fetchAccount(String mobileNumber) {
-        Customer customer = customerRepository.findByMobileNumber(mobileNumber).orElseThrow((
-                () -> new ResourceNotFoundException("Customer", "mobileNumber", mobileNumber)
+    public CustomerDto fetchAccount(String nicNumber) {
+        Customer customer = customerRepository.findByNicNumber(nicNumber).orElseThrow((
+                () -> new ResourceNotFoundException("Customer", "mobileNumber", nicNumber)
                 ));
 
         Accounts accounts = accountsRepository.findByCustomerId(customer.getCustomerId()).orElseThrow((
@@ -98,9 +97,9 @@ public class AccountsServiceImpl implements IAccountsService {
     }
 
     @Override
-    public boolean deleteAccount(String mobileNumber) {
-        Customer customer = customerRepository.findByMobileNumber(mobileNumber).orElseThrow(
-                () -> new ResourceNotFoundException("Customer", "mobileNumber", mobileNumber)
+    public boolean deleteAccount(String nicNumber) {
+        Customer customer = customerRepository.findByNicNumber(nicNumber).orElseThrow(
+                () -> new ResourceNotFoundException("Customer", "mobileNumber", nicNumber)
         );
         accountsRepository.deleteByCustomerId(customer.getCustomerId());
         customerRepository.deleteById(customer.getCustomerId());

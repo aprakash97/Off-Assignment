@@ -5,7 +5,7 @@ import com.microservice.accounts.dto.CustomerDto;
 public interface IAccountsService {
     void createAccount(CustomerDto customerDto);
 
-    CustomerDto fetchAccount(String mobileNumber);
+    CustomerDto fetchAccount(String nicNumber);
 
     boolean updateAccount(CustomerDto customerDto);
 

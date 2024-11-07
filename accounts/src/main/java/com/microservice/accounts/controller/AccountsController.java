@@ -59,10 +59,9 @@ public class AccountsController {
             responseCode = "200",
             description = "HTTP Status Created"
     )
-    public ResponseEntity<CustomerDto> fetchAccountDetails(@RequestParam @Pattern(regexp="(^$|[0-9]{10})",message = "Mobile number must be 10 digits")
-                                                               String mobileNumber){
-        CustomerDto customerDto = iAccountsService.fetchAccount(mobileNumber);
-        System.out.println("customerDto" + customerDto);
+    public ResponseEntity<CustomerDto> fetchAccountDetails(@RequestParam @Pattern(regexp="(^$|[0-9]{12})",message = "NIC number must be 10 digits")
+                                                               String nicNumber){
+        CustomerDto customerDto = iAccountsService.fetchAccount(nicNumber);
         return ResponseEntity
                 .status(HttpStatus.OK).body(customerDto);
     }
@@ -125,9 +124,9 @@ public class AccountsController {
             )
     })
     public ResponseEntity<ResponseDto> deleteAccountDetails(@RequestParam
-                                                            @Pattern(regexp="(^$|[0-9]{10})",message = "Mobile number must be 10 digits")
-                                                            String mobileNumber) {
-        boolean isDeleted = iAccountsService.deleteAccount(mobileNumber);
+                                                            @Pattern(regexp="(^$|[0-9]{12})",message = "NIC number must be 12 digits")
+                                                            String nicNumber) {
+        boolean isDeleted = iAccountsService.deleteAccount(nicNumber);
         if(isDeleted) {
             return ResponseEntity
                     .status(HttpStatus.OK)

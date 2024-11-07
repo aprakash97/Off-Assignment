@@ -29,15 +29,12 @@ public class CustomerDto {
     )
     private String email;
 
-    @Pattern(regexp = "(^$|[0-9]{10})", message = "Mobile number must be 10 digits")
+    @Pattern(regexp = "(^$|[0-9]{12})", message = "NIC number must be 12 digits")
     @Schema(
-            description = "Mobile number of Customer",
-            example = "0777994528"
+            description = "NIC number of Customer",
+            example = "198201409894"
     )
-    private String mobileNumber;
+    private String nicNumber;
 
-    @Schema(
-            description = "Mobile number of Customer"
-    )
     private AccountsDto accountsDto;
 }
