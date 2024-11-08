@@ -1,5 +1,6 @@
 package com.microservice.gatewayserver.filter;
 
+import com.microservice.gatewayserver.exception.RoleMismatchExceptionHandler;
 import com.microservice.gatewayserver.util.JwtUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.gateway.filter.GatewayFilter;
@@ -40,16 +41,11 @@ public class RoleFilter extends AbstractGatewayFilterFactory<RoleFilter.Config> 
                     // Validate the token
                     jwtUtil.validateToken(authHeader);
 
-                    System.out.println("TESTING"+ jwtUtil.hasRole(authHeader, "ADMIN"));
                     // Check if the user has the ADMIN role
                     if (!jwtUtil.hasRole(authHeader, "ADMIN")) {
-                        System.out.println("Access Denied: User does not have ADMIN role - " + authHeader);
-                        throw new RuntimeException("Access Denied: Insufficient permissions");
+                        throw new RoleMismatchExceptionHandler("Access Denied: Insufficient permissions");
                     }
-                } catch(RuntimeException e){
-                    throw new RuntimeException("Access Denied: Insufficient permissions");
                 }catch (Exception e) {
-                    System.out.println("Unauthorized access: " + e.getMessage());
                     throw new RuntimeException("Unauthorized access to application");
                 }
             }

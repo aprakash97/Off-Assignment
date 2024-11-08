@@ -1,5 +1,6 @@
 package com.microservice.identityserver.service;
 
+import com.microservice.identityserver.exception.UserAlreadyExistsException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -8,6 +9,8 @@ import com.microservice.identityserver.repository.UserCredentialRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+
+import java.util.Optional;
 
 @Service
 public class AuthService {
@@ -21,6 +24,11 @@ public class AuthService {
     private JwtService jwtService;
 
     public String saveUser(UserCredential credential){
+        Optional<UserCredential> existingUser = repository.findByName(credential.getName());
+        if (existingUser.isPresent()) {
+            throw new UserAlreadyExistsException("Username already exists, Register with another username");
+        }
+
         if(credential.getName().equals("Admin")){
             credential.setRole("ADMIN");
         }
