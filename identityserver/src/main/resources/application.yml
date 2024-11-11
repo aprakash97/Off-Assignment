@@ -23,6 +23,14 @@ management:
   endpoint:
     shutdown:
       enabled: true
+    metrics:
+      enabled: true
+    prometheus:
+      enabled: true
+  metrics:
+    export:
+      prometheus:
+        enabled: true
   info:
     env:
       enabled: true

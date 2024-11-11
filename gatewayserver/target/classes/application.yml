@@ -43,6 +43,16 @@ management:
   endpoint:
     gateway:
       enabled: true
+    shutdown:
+      enabled: true
+    metrics:
+      enabled: true
+    prometheus:
+      enabled: true
+  metrics:
+    export:
+      prometheus:
+        enabled: true
 
 eureka:
   instance:
